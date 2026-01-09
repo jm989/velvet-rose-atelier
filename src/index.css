@@ -1,96 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* YoursTrulyS Luxury Flower Shop Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Primary Brand Colors */
+    --noir: 166 35% 4%;
+    --oat: 40 26% 92%;
+    
+    /* Valentine's Special Colors */
+    --ruby: 343 96% 13%;
+    --rose-ivory: 352 100% 96%;
+    
+    /* Semantic Tokens */
+    --background: 40 26% 92%;
+    --foreground: 166 35% 4%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 26% 92%;
+    --card-foreground: 166 35% 4%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 26% 92%;
+    --popover-foreground: 166 35% 4%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 166 35% 4%;
+    --primary-foreground: 40 26% 92%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 40 26% 88%;
+    --secondary-foreground: 166 35% 4%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 20% 85%;
+    --muted-foreground: 166 20% 30%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 40 26% 88%;
+    --accent-foreground: 166 35% 4%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 40 26% 92%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 166 10% 80%;
+    --input: 166 10% 80%;
+    --ring: 166 35% 4%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Section variants */
+    --section-dark-bg: 166 35% 4%;
+    --section-dark-fg: 40 26% 92%;
+    --section-light-bg: 40 26% 92%;
+    --section-light-fg: 166 35% 4%;
+    
+    /* Valentine's variants */
+    --section-ruby-bg: 343 96% 13%;
+    --section-ruby-fg: 352 100% 96%;
+    --section-rose-bg: 352 100% 96%;
+    --section-rose-fg: 343 96% 13%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(166 35% 4% / 0.08);
+    --shadow-medium: 0 8px 32px -8px hsl(166 35% 4% / 0.12);
+    --shadow-button: 0 2px 8px -2px hsl(166 35% 4% / 0.15);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 166 35% 4%;
+    --foreground: 40 26% 92%;
+    --card: 166 35% 8%;
+    --card-foreground: 40 26% 92%;
+    --popover: 166 35% 8%;
+    --popover-foreground: 40 26% 92%;
+    --primary: 40 26% 92%;
+    --primary-foreground: 166 35% 4%;
+    --secondary: 166 30% 15%;
+    --secondary-foreground: 40 26% 92%;
+    --muted: 166 30% 15%;
+    --muted-foreground: 40 20% 70%;
+    --accent: 166 30% 15%;
+    --accent-foreground: 40 26% 92%;
+    --border: 166 20% 20%;
+    --input: 166 20% 20%;
+    --ring: 40 26% 92%;
   }
 }
 
@@ -99,7 +91,171 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif Display', serif;
+    @apply font-normal tracking-tight;
+  }
+}
+
+@layer components {
+  /* Section Variants */
+  .section-dark {
+    @apply bg-noir text-oat;
+  }
+  
+  .section-light {
+    @apply bg-oat text-noir;
+  }
+  
+  .section-ruby {
+    @apply bg-ruby text-rose-ivory;
+  }
+  
+  .section-rose {
+    @apply bg-rose-ivory text-ruby;
+  }
+
+  /* Button Variants */
+  .btn-luxury {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium tracking-wider uppercase transition-all duration-300 ease-out;
+    box-shadow: var(--shadow-button);
+  }
+  
+  .btn-luxury-light {
+    @apply btn-luxury bg-oat text-noir hover:bg-noir hover:text-oat;
+  }
+  
+  .btn-luxury-dark {
+    @apply btn-luxury bg-noir text-oat hover:bg-oat hover:text-noir;
+  }
+  
+  .btn-luxury-outline {
+    @apply btn-luxury bg-transparent border border-current hover:bg-noir hover:text-oat;
+  }
+  
+  .btn-ruby {
+    @apply btn-luxury bg-ruby text-rose-ivory hover:bg-rose-ivory hover:text-ruby;
+  }
+
+  /* Typography */
+  .heading-display {
+    font-family: 'Noto Serif Display', serif;
+    @apply text-4xl md:text-5xl lg:text-6xl font-light leading-tight;
+  }
+  
+  .heading-section {
+    font-family: 'Noto Serif Display', serif;
+    @apply text-3xl md:text-4xl font-light leading-tight;
+  }
+  
+  .heading-card {
+    font-family: 'Noto Serif Display', serif;
+    @apply text-xl md:text-2xl font-normal;
+  }
+  
+  .caption-elegant {
+    @apply text-xs md:text-sm uppercase tracking-[0.2em] font-medium;
+  }
+  
+  .body-refined {
+    @apply text-base md:text-lg font-light leading-relaxed;
+  }
+
+  /* Product Card */
+  .product-card {
+    @apply cursor-pointer;
+  }
+  
+  .product-image-circle {
+    @apply relative w-full aspect-square rounded-full overflow-hidden transition-transform duration-500 ease-out group-hover:scale-105;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Input Styling */
+  .input-luxury {
+    @apply w-full px-4 py-3 bg-transparent border border-noir/30 focus:border-noir focus:outline-none transition-colors duration-300 text-sm;
+  }
+
+  /* Star Rating */
+  .star-filled {
+    @apply text-amber-400 fill-amber-400;
+  }
+}
+
+@layer utilities {
+  /* Animations */
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Link underline animation */
+  .link-underline {
+    @apply relative;
+  }
+  
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-px bg-current scale-x-0 origin-right transition-transform duration-300;
+  }
+  
+  .link-underline:hover::after {
+    @apply scale-x-100 origin-left;
   }
 }
