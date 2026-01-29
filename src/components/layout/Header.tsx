@@ -7,7 +7,7 @@ const navLinks = [
   { label: "Home", path: "/" },
   { label: "About Us", path: "/about" },
   { label: "Flowers", path: "/flowers" },
-  { label: "Vals Day", path: "/valentines" },
+  { label: "LOVE Day", path: "/valentines" },
   { label: "Contact Us", path: "/contact" },
 ];
 
