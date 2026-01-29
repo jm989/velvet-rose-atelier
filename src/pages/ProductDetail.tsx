@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Minus, Plus, ChevronDown } from "lucide-react";
+import { Minus, Plus, ChevronDown, Loader2 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 import birthdayBouquet from "@/assets/bouquet-birthday.jpg";
 import valentinesBouquet from "@/assets/bouquet-valentines.jpg";
@@ -77,6 +79,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("Regular");
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const [personalization, setPersonalization] = useState({
     cakeFlavour: "",
@@ -84,6 +87,48 @@ const ProductDetail = () => {
     cakeTopper: "",
     giftMessage: "",
   });
+
+  const handleCheckout = async () => {
+    if (!product || !productId) return;
+    
+    setIsCheckingOut(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: {
+          productName: product.name,
+          price: product.price * 100, // Convert to pence
+          quantity,
+          metadata: {
+            productId,
+            category: category || "",
+            size: isCakeBouquet ? selectedSize : undefined,
+            cakeFlavour: personalization.cakeFlavour || undefined,
+            wrapColour: personalization.wrapColour || undefined,
+            cakeTopper: personalization.cakeTopper || undefined,
+            giftMessage: personalization.giftMessage || undefined,
+          },
+        },
+      });
+
+      if (error) throw error;
+      
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast({
+        title: "Checkout failed",
+        description: "Unable to start checkout. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   if (!product) {
     return (
@@ -240,7 +285,20 @@ const ProductDetail = () => {
               </div>
 
               {/* Add to Bag */}
-              <button className="btn-luxury-dark w-full mb-8">Add to Bag</button>
+              <button 
+                onClick={handleCheckout}
+                disabled={isCheckingOut}
+                className="btn-luxury-dark w-full mb-8 flex items-center justify-center gap-2 disabled:opacity-60"
+              >
+                {isCheckingOut ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  "Add to Bag"
+                )}
+              </button>
 
               {/* Accordions */}
               <div className="border-t border-noir/10">
