@@ -9,6 +9,8 @@ import Flowers from "./pages/Flowers";
 import ProductDetail from "./pages/ProductDetail";
 import Valentines from "./pages/Valentines";
 import Contact from "./pages/Contact";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCanceled from "./pages/PaymentCanceled";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/flowers/:category/:productId" element={<ProductDetail />} />
           <Route path="/valentines" element={<Valentines />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-canceled" element={<PaymentCanceled />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
