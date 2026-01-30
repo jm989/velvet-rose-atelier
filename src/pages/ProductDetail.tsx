@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Minus, Plus, ChevronDown, Loader2 } from "lucide-react";
+import { Minus, Plus, ChevronDown, Check } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
-
 import birthdayBouquet from "@/assets/bouquet-birthday.jpg";
 import valentinesBouquet from "@/assets/bouquet-valentines.jpg";
 import babyShowerBouquet from "@/assets/bouquet-babyshower.jpg";
@@ -75,11 +74,12 @@ const ProductDetail = () => {
   const { productId, category } = useParams();
   const product = products[productId || ""];
   const isCakeBouquet = category === "cake-bouquets";
+  const { addItem } = useCart();
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("Regular");
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const [personalization, setPersonalization] = useState({
     cakeFlavour: "",
@@ -88,46 +88,31 @@ const ProductDetail = () => {
     giftMessage: "",
   });
 
-  const handleCheckout = async () => {
+  const handleAddToCart = () => {
     if (!product || !productId) return;
     
-    setIsCheckingOut(true);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: {
-          productName: product.name,
-          price: product.price * 100, // Convert to pence
-          quantity,
-          metadata: {
-            productId,
-            category: category || "",
-            size: isCakeBouquet ? selectedSize : undefined,
-            cakeFlavour: personalization.cakeFlavour || undefined,
-            wrapColour: personalization.wrapColour || undefined,
-            cakeTopper: personalization.cakeTopper || undefined,
-            giftMessage: personalization.giftMessage || undefined,
-          },
-        },
-      });
+    addItem({
+      productId,
+      name: product.name,
+      price: product.price,
+      quantity,
+      image: product.image,
+      category: category || "",
+      size: isCakeBouquet ? selectedSize : undefined,
+      cakeFlavour: personalization.cakeFlavour || undefined,
+      wrapColour: personalization.wrapColour || undefined,
+      cakeTopper: personalization.cakeTopper || undefined,
+      giftMessage: personalization.giftMessage || undefined,
+    });
 
-      if (error) throw error;
-      
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("No checkout URL returned");
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      toast({
-        title: "Checkout failed",
-        description: "Unable to start checkout. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsCheckingOut(false);
-    }
+    setIsAdded(true);
+    toast({
+      title: "Added to basket",
+      description: `${product.name} has been added to your basket.`,
+    });
+
+    // Reset button after 2 seconds
+    setTimeout(() => setIsAdded(false), 2000);
   };
 
   if (!product) {
@@ -286,14 +271,14 @@ const ProductDetail = () => {
 
               {/* Add to Bag */}
               <button 
-                onClick={handleCheckout}
-                disabled={isCheckingOut}
+                onClick={handleAddToCart}
+                disabled={isAdded}
                 className="btn-luxury-dark w-full mb-8 flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                {isCheckingOut ? (
+                {isAdded ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Processing...
+                    <Check className="w-4 h-4" />
+                    Added to Basket
                   </>
                 ) : (
                   "Add to Bag"

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -14,9 +15,10 @@ const navLinks = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { openCart, totalItems } = useCart();
 
   return (
-    <header className="section-dark sticky top-0 z-50">
+    <header className="section-dark sticky top-0 z-40">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="font-serif text-2xl md:text-3xl tracking-tight">
@@ -36,16 +38,44 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+          
+          {/* Cart Button */}
+          <button
+            onClick={openCart}
+            className="relative p-2 hover:opacity-70 transition-opacity"
+            aria-label="Open cart"
+          >
+            <ShoppingBag size={20} />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-blush text-noir text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+                {totalItems}
+              </span>
+            )}
+          </button>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden p-2"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Menu & Cart */}
+        <div className="md:hidden flex items-center gap-4">
+          <button
+            onClick={openCart}
+            className="relative p-2"
+            aria-label="Open cart"
+          >
+            <ShoppingBag size={20} />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-blush text-noir text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+                {totalItems}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
